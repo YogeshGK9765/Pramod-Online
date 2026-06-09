@@ -38,14 +38,18 @@
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:'Sora','Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-/* ── LANG ── */
-.mr{display:none}
-body.lang-mr .en{display:none}
-body.lang-mr .mr{display:block}
-body.lang-mr span.en{display:none}
-body.lang-mr span.mr{display:inline}
-body.lang-mr b.en{display:none}
-body.lang-mr b.mr{display:inline}
+/* ── LANG ── default Marathi ── */
+.en{display:none}
+body.lang-en .mr{display:none}
+body.lang-en .en{display:block}
+body.lang-en span.mr{display:none}
+body.lang-en span.en{display:inline}
+body.lang-en b.mr{display:none}
+body.lang-en b.en{display:inline}
+/* Marathi visible by default */
+.mr{display:block}
+span.mr{display:inline}
+b.mr{display:inline}
 
 /* ── TOPBAR ── */
 .topbar{background:#f1f5f9;border-bottom:1px solid #e2e8f0;padding:9px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -85,7 +89,49 @@ body.lang-mr b.mr{display:inline}
 .hero{background:linear-gradient(135deg,#e0f2fe 0%,#eff6ff 40%,#f0fdf4 100%);position:relative;overflow:hidden;padding:80px 24px 90px;border-bottom:1px solid #bae6fd}
 .hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 700px 500px at 80% 40%,rgba(14,165,233,.12) 0%,transparent 65%),radial-gradient(ellipse 400px 400px at 5% 80%,rgba(234,88,12,.08) 0%,transparent 60%);pointer-events:none}
 .hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(14,165,233,.15) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
-.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:center;position:relative}
+.hero-inner-OLD{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:center;position:relative}
+
+/* ── HERO OWNER PANEL – MATCHES SCREENSHOT ── */
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center;position:relative}
+.hero-owner-panel{position:relative;display:flex;flex-direction:column;align-items:stretch}
+
+/* Outer card wrapping photo + info */
+.hero-owner-card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 8px 40px rgba(14,165,233,.1),0 2px 12px rgba(0,0,0,.06);overflow:hidden;animation:fadeInRight .7s .3s ease both}
+body.dark .hero-owner-card{background:rgba(15,23,42,.9);border-color:rgba(255,255,255,.1);box-shadow:0 8px 40px rgba(0,0,0,.4)}
+
+/* Photo area - gradient non-white background */
+.hero-photo-area{position:relative;background:linear-gradient(160deg,#dbeafe 0%,#e0f2fe 35%,#bfdbfe 65%,#c7d2fe 100%);min-height:280px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+body.dark .hero-photo-area{background:linear-gradient(160deg,#0f172a 0%,#1e293b 35%,#162032 65%,#0f172a 100%)}
+
+/* Animated rings inside photo area */
+.hpa-ring{position:absolute;border-radius:50%;border:1px solid rgba(99,102,241,.15);pointer-events:none}
+.hpa-ring-1{width:280px;height:280px;top:50%;left:50%;transform:translate(-50%,-50%);animation:ring-breathe 4s ease-in-out infinite}
+.hpa-ring-2{width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(234,88,12,.15);animation:ring-breathe 4s 1.5s ease-in-out infinite}
+@keyframes ring-breathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.08);opacity:1}}
+
+/* Glow dot decorations */
+.hpa-dot{position:absolute;border-radius:50%;pointer-events:none}
+.hpa-dot-1{width:80px;height:80px;background:rgba(234,88,12,.12);top:10px;right:20px;filter:blur(24px)}
+.hpa-dot-2{width:60px;height:60px;background:rgba(14,165,233,.15);bottom:30px;left:10px;filter:blur(20px)}
+
+/* Photo itself */
+.hero-owner-photo{width:100%;max-width:320px;height:auto;display:block;object-fit:contain;object-position:bottom center;position:relative;z-index:2;filter:drop-shadow(0 -4px 20px rgba(14,165,233,.2));animation:owner-float 5s ease-in-out infinite}
+@keyframes owner-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* Info section below photo */
+.hero-owner-info{padding:18px 20px 16px;border-top:1px solid #f1f5f9}
+body.dark .hero-owner-info{border-top-color:rgba(255,255,255,.07)}
+.hero-owner-name{font-size:18px;font-weight:900;color:#0c1a2e;letter-spacing:-.02em;margin-bottom:2px;text-align:center}
+body.dark .hero-owner-name{color:#fff}
+.hero-owner-role{font-size:10.5px;color:var(--orange);font-weight:800;letter-spacing:.06em;margin-bottom:14px;text-transform:uppercase;text-align:center}
+.hero-owner-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.hoa-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 6px;border-radius:10px;font-size:11px;font-weight:700;text-decoration:none;transition:all .22s;white-space:nowrap;letter-spacing:.01em}
+.hoa-wa{background:#e8fdf1;color:#15803d;border:1px solid rgba(21,128,61,.2)}
+.hoa-wa:hover{background:#25d366;color:#fff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(37,211,102,.35)}
+.hoa-ph{background:var(--orange-light);color:var(--orange);border:1px solid rgba(234,88,12,.2)}
+.hoa-ph:hover{background:var(--orange);color:#fff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(234,88,12,.35)}
+.hoa-loc{background:var(--blue-light);color:var(--blue2);border:1px solid rgba(37,99,235,.2)}
+.hoa-loc:hover{background:var(--blue2);color:#fff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(37,99,235,.35)}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(14,165,233,.12);border:1px solid rgba(14,165,233,.35);border-radius:30px;padding:6px 16px;font-size:11.5px;color:#0369a1;font-weight:700;margin-bottom:22px;letter-spacing:.05em;text-transform:uppercase}
 .hero h1{font-size:clamp(28px,5vw,50px);font-weight:800;color:#0c1a2e;line-height:1.2;margin-bottom:8px;letter-spacing:-.02em}
 .hero h1 span{color:var(--orange)}
@@ -338,15 +384,310 @@ body.dark .hci-g{background:rgba(22,163,74,.2)}
 .fbtn-wa{background:linear-gradient(135deg,#25d366,#128c7e)}
 .fbtn-call{background:linear-gradient(135deg,var(--orange),var(--orange2))}
 
-/* ── FOOTER – light mode ── */
-footer{background:#f1f5f9;color:#64748b;text-align:center;padding:24px 20px;font-size:12.5px;line-height:2;border-top:1px solid #e2e8f0}
-footer strong{color:#0c1a2e}
-footer a{color:var(--orange);text-decoration:none}
 
-/* ── RESPONSIVE ── */
+/* ══════════════════════════════════════════
+   LANDING PAGE – LIGHT THEME
+══════════════════════════════════════════ */
+#landing{
+  position:fixed;inset:0;z-index:9999;
+  background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:24px;overflow:hidden;
+  transition:opacity .8s ease,transform .8s ease;
+}
+#landing.exit{opacity:0;transform:scale(1.06);pointer-events:none}
+#landing.hidden{display:none}
+
+/* Animated background layers */
+.lp-bg{position:absolute;inset:0;pointer-events:none}
+.lp-grad{position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% -10%,rgba(234,88,12,.1) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 95% 100%,rgba(251,191,36,.12) 0%,transparent 60%),radial-gradient(ellipse 40% 35% at 5% 90%,rgba(234,88,12,.07) 0%,transparent 60%)}
+.lp-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(234,88,12,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(234,88,12,.04) 1px,transparent 1px);background-size:48px 48px}
+.lp-orb{position:absolute;border-radius:50%;filter:blur(70px);animation:lp-drift 8s ease-in-out infinite}
+.lp-orb-1{width:500px;height:500px;background:rgba(234,88,12,.1);top:-180px;left:-150px;animation-delay:0s}
+.lp-orb-2{width:350px;height:350px;background:rgba(251,191,36,.12);bottom:-100px;right:-100px;animation-delay:3s}
+.lp-orb-3{width:220px;height:220px;background:rgba(234,88,12,.07);top:55%;left:65%;animation-delay:5s}
+@keyframes lp-drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.08)}66%{transform:translate(-20px,15px) scale(.95)}}
+
+/* Particles */
+.lp-particles{position:absolute;inset:0;overflow:hidden}
+.lp-dot{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(234,88,12,.35);animation:lp-rise linear infinite}
+@keyframes lp-rise{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.3}100%{transform:translateY(-20px) scale(1.5);opacity:0}}
+
+/* Content */
+.lp-content{position:relative;z-index:2;max-width:540px;width:100%}
+
+/* Logo ring */
+.lp-logo-wrap{position:relative;width:120px;height:120px;margin:0 auto 24px;animation:lp-pop .9s cubic-bezier(.34,1.56,.64,1) both}
+.lp-logo-ring{position:absolute;inset:-8px;border-radius:50%;border:2px solid transparent;background:linear-gradient(135deg,#ea580c,#f97316,#fbbf24,#ea580c) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;animation:lp-spin 4s linear infinite}
+@keyframes lp-spin{to{transform:rotate(360deg)}}
+.lp-logo-inner{width:120px;height:120px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(234,88,12,.15),0 8px 40px rgba(234,88,12,.2),0 20px 60px rgba(0,0,0,.08)}
+.lp-logo-inner img{width:108px;height:108px;object-fit:contain;border-radius:50%}
+@keyframes lp-pop{from{opacity:0;transform:scale(.2) rotate(-15deg)}to{opacity:1;transform:scale(1) rotate(0deg)}}
+
+/* Badge */
+.lp-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(234,88,12,.08);border:1px solid rgba(234,88,12,.2);border-radius:30px;padding:6px 18px;font-size:11px;font-weight:700;color:#c2410c;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;animation:lp-slide .7s .15s ease both}
+
+/* Title */
+.lp-title{font-size:clamp(28px,6vw,52px);font-weight:900;color:#0c1a2e;letter-spacing:-.03em;line-height:1.1;animation:lp-slide .7s .25s ease both;margin-bottom:6px}
+.lp-title span{background:linear-gradient(135deg,#ea580c,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lp-sub{font-size:clamp(13px,2vw,15px);color:#64748b;margin:10px 0 24px;animation:lp-slide .7s .35s ease both;line-height:1.65}
+
+/* Stats */
+.lp-stats{display:flex;gap:0;margin-bottom:28px;animation:lp-slide .7s .45s ease both;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#f8f9fb;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.lp-stat{flex:1;padding:14px 10px;border-right:1px solid #e5e7eb}
+.lp-stat:last-child{border-right:none}
+.lp-stat .n{font-size:20px;font-weight:900;color:#ea580c}
+.lp-stat .l{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+
+/* Buttons */
+.lp-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:lp-slide .7s .55s ease both;margin-bottom:28px}
+.lp-btn-main{background:linear-gradient(135deg,#ea580c,#f97316);color:#fff;padding:13px 30px;border-radius:50px;font-size:14px;font-weight:800;border:none;cursor:pointer;font-family:inherit;letter-spacing:.02em;box-shadow:0 6px 24px rgba(234,88,12,.4);transition:all .25s;position:relative;overflow:hidden}
+.lp-btn-main::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#f97316,#fbbf24);opacity:0;transition:opacity .25s}
+.lp-btn-main:hover::before{opacity:1}
+.lp-btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(234,88,12,.5)}
+.lp-btn-main span{position:relative;z-index:1}
+.lp-btn-wa{background:#f0fdf4;color:#16a34a;border:1px solid rgba(22,163,74,.25);padding:13px 22px;border-radius:50px;font-size:14px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s}
+.lp-btn-wa:hover{background:#25d366;color:#fff;border-color:#25d366;transform:translateY(-2px)}
+
+/* Countdown */
+.lp-countdown{animation:lp-slide .7s .65s ease both;display:flex;align-items:center;justify-content:center;gap:10px}
+.lp-cd-track{width:150px;height:3px;background:#e5e7eb;border-radius:2px;overflow:hidden}
+.lp-cd-bar{height:100%;background:linear-gradient(90deg,#ea580c,#fbbf24);border-radius:2px;width:100%;transform-origin:left;animation:lp-shrink 4s linear forwards}
+@keyframes lp-shrink{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.lp-cd-text{font-size:11px;color:#94a3b8;font-weight:500;white-space:nowrap}
+.lp-cd-num{font-size:11px;color:#64748b;font-weight:700;min-width:14px;text-align:right}
+
+@keyframes lp-slide{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════════════
+   GLOBAL ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes countUp{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,.4)}50%{box-shadow:0 0 20px 8px rgba(234,88,12,.15)}}
+.anim-fade-up{animation:fadeInUp .6s ease both}
+.anim-fade-left{animation:fadeInLeft .6s ease both}
+.anim-fade-right{animation:fadeInRight .6s ease both}
+.anim-scale{animation:scaleIn .5s ease both}
+[data-aos]{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+[data-aos].aos-visible{opacity:1;transform:none}
+[data-aos="fade-left"]{transform:translateX(-30px)}
+[data-aos="fade-left"].aos-visible{transform:none}
+[data-aos="fade-right"]{transform:translateX(30px)}
+[data-aos="fade-right"].aos-visible{transform:none}
+[data-aos="scale"]{transform:scale(.85)}
+[data-aos="scale"].aos-visible{transform:none}
+
+/* Hero animation */
+.hero-badge{animation:fadeInUp .6s .1s ease both}
+.hero h1{animation:fadeInUp .6s .2s ease both}
+.hero-sub{animation:fadeInUp .6s .3s ease both}
+.hero-actions{animation:fadeInUp .6s .4s ease both}
+.hero-stats{animation:fadeInUp .6s .5s ease both}
+.hero-card{animation:fadeInRight .7s .3s ease both}
+/* Stat glow */
+.hstat{animation:glow 3s ease-in-out infinite}
+.hstat:nth-child(2){animation-delay:1s}
+.hstat:nth-child(3){animation-delay:2s}
+/* Service cards stagger */
+.qs-card:nth-child(1){animation-delay:.05s}
+.qs-card:nth-child(2){animation-delay:.1s}
+.qs-card:nth-child(3){animation-delay:.15s}
+.qs-card:nth-child(4){animation-delay:.2s}
+.qs-card:nth-child(5){animation-delay:.25s}
+.qs-card:nth-child(6){animation-delay:.3s}
+.qs-card:nth-child(7){animation-delay:.35s}
+.qs-card:nth-child(8){animation-delay:.4s}
+/* Navbar entrance */
+.navbar{animation:fadeInUp .5s ease both}
+/* Footer shimmer gradient bar */
+footer::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--orange),#f97316,#fbbf24,var(--orange));background-size:200% 100%;animation:shimmer 3s linear infinite;margin-bottom:0}
+
+/* ══════════════════════════════════════════
+   ENHANCED ABOUT PAGE
+══════════════════════════════════════════ */
+.owner-profile-section{display:grid;grid-template-columns:280px 1fr;gap:28px;margin-bottom:28px;align-items:start}
+@media(max-width:768px){.owner-profile-section{grid-template-columns:1fr}}
+.owner-photo-card{background:var(--surface);border-radius:16px;padding:28px 20px;box-shadow:var(--shadow-md);border:1.5px solid var(--border);text-align:center;position:relative;overflow:hidden}
+.owner-photo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:90px;background:linear-gradient(135deg,var(--orange),var(--orange2));opacity:.12;border-radius:16px 16px 0 0}
+.owner-photo-wrap{width:140px;height:160px;margin:10px auto 16px;position:relative;z-index:1}
+.owner-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:14px;box-shadow:0 8px 32px rgba(234,88,12,.25);border:3px solid var(--orange);display:block}
+.owner-badge{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:10px;font-weight:800;padding:4px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.05em}
+.owner-name{font-size:20px;font-weight:900;color:var(--ink);margin-top:20px;margin-bottom:4px}
+.owner-role{font-size:12px;color:var(--orange);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+.owner-contact-quick{display:flex;flex-direction:column;gap:8px}
+.ocq-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;letter-spacing:.01em}
+.ocq-phone{background:var(--orange);color:#fff}
+.ocq-phone:hover{background:var(--orange2);transform:translateY(-1px)}
+.ocq-wa{background:#25d366;color:#fff}
+.ocq-wa:hover{background:#128c7e;transform:translateY(-1px)}
+
+/* About info card enhanced */
+.about-info-card{background:var(--surface);border-radius:16px;padding:28px;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.about-info-card h3{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:20px;letter-spacing:-.01em;padding-bottom:12px;border-bottom:2px solid var(--border2)}
+.about-story{background:linear-gradient(145deg,#fff7ed,#fffbf5);border:1.5px solid #fed7aa;border-radius:12px;padding:20px;margin-bottom:20px;font-size:14px;line-height:1.85;color:#78350f}
+body.dark .about-story{background:linear-gradient(145deg,#1e1505,#2a1a08);border-color:#5a3010;color:#fbbf24}
+.cert-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.cert-badge{display:inline-flex;align-items:center;gap:7px;background:var(--blue-light);color:var(--blue2);border:1px solid rgba(37,99,235,.25);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700}
+.cert-badge.green{background:#f0fdf4;color:#15803d;border-color:rgba(22,163,74,.25)}
+.cert-badge.orange{background:var(--orange-light);color:var(--orange);border-color:rgba(234,88,12,.25)}
+
+/* ══════════════════════════════════════════
+   OWNER QUICK CONTACT CARD (hero)
+══════════════════════════════════════════ */
+.hcard-owner-img{width:68px;height:80px;object-fit:cover;object-position:top center;border-radius:10px;border:2px solid var(--orange);box-shadow:0 4px 16px rgba(234,88,12,.25);flex-shrink:0}
+.owner-quick-card{background:var(--surface);border:1.5px solid #bae6fd;border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(14,165,233,.12);overflow:hidden}
+body.dark .owner-quick-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.oqc-head{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--border2);margin-bottom:14px}
+.oqc-info .oqc-name{font-size:16px;font-weight:800;color:var(--ink)}
+body.dark .oqc-info .oqc-name{color:#fff}
+.oqc-info .oqc-role{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+.oqc-info .oqc-center{font-size:11px;color:var(--muted);margin-top:1px}
+.oqc-action-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.oqab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;border-radius:10px;text-decoration:none;font-size:10px;font-weight:700;letter-spacing:.03em;transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.oqab-wa{background:#e8fdf1;color:#16a34a;border:1px solid rgba(22,163,74,.2)}
+.oqab-wa:hover{background:#25d366;color:#fff;transform:translateY(-2px)}
+.oqab-ph{background:var(--orange-light);color:var(--orange);border:1px solid rgba(234,88,12,.2)}
+.oqab-ph:hover{background:var(--orange);color:#fff;transform:translateY(-2px)}
+.oqab-loc{background:var(--blue-light);color:var(--blue2);border:1px solid rgba(37,99,235,.2)}
+.oqab-loc:hover{background:var(--blue2);color:#fff;transform:translateY(-2px)}
+.oqab-icon{font-size:20px;line-height:1}
+
+/* ══════════════════════════════════════════
+   ENHANCED FOOTER
+══════════════════════════════════════════ */
+footer{background:linear-gradient(135deg,#0d1117,#1c2333);color:rgba(255,255,255,.5);text-align:center;padding:0 20px 24px;font-size:12.5px;line-height:2;border-top:none}
+footer strong{color:rgba(255,255,255,.85)}
+footer a{color:var(--orange2);text-decoration:none}
+footer a:hover{color:#fb923c}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-brand{padding:24px 0 16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+.footer-brand strong{font-size:15px;color:#fff}
+.footer-copy{font-size:11px;opacity:.3;margin-top:8px}
+.footer-sig{font-size:10.5px;opacity:.28;margin-top:3px;font-style:italic;letter-spacing:.02em}
+.footer-sig a{color:rgba(255,255,255,.45);text-decoration:none;transition:opacity .2s}
+.footer-sig a:hover{opacity:.7}
+
+
+
+/* ══════════════════════════════════════════
+   ABOUT PAGE – MATCHES SCREENSHOT LAYOUT
+══════════════════════════════════════════ */
+.about-page-wrap{max-width:1200px;margin:0 auto;padding:60px 24px}
+
+/* TOP ROW: left = story+contact, right = photo card + name card */
+.about-top-row{display:grid;grid-template-columns:1fr 380px;gap:32px;margin-bottom:56px;align-items:start}
+@media(max-width:900px){.about-top-row{grid-template-columns:1fr}.about-right-col{display:none}}
+
+/* Left column */
+.about-left-col{display:flex;flex-direction:column;gap:20px}
+
+/* Story card */
+.about-story-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px 28px 24px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+body.dark .about-story-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+.asc-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.asc-label svg{flex-shrink:0}
+.asc-text{font-size:14px;line-height:1.9;color:var(--ink3)}
+body.dark .asc-text{color:rgba(255,255,255,.7)}
+
+/* Contact list card */
+.about-contact-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:22px 22px 18px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+body.dark .about-contact-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+.acc2-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.cl-list{display:flex;flex-direction:column;gap:0}
+.cl-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f3f4f6}
+.cl-row:last-child{border-bottom:none;padding-bottom:0}
+.cl-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.cl-ico-o{background:rgba(234,88,12,.1)}
+.cl-ico-g{background:rgba(22,163,74,.1)}
+.cl-ico-b{background:rgba(29,78,216,.1)}
+.cl-row-inner{flex:1;min-width:0}
+.cl-lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em}
+.cl-v{font-size:13.5px;font-weight:700;color:var(--ink)}
+.cl-v a{color:var(--ink);text-decoration:none;transition:color .15s}
+.cl-v a:hover{color:var(--orange)}
+.cl-arr2{color:var(--orange);font-size:14px;opacity:0;transition:opacity .2s;flex-shrink:0}
+.cl-row:hover .cl-arr2{opacity:1}
+
+/* Right column */
+.about-right-col{display:flex;flex-direction:column;gap:14px}
+
+/* Photo card - gradient bg matching screenshot style */
+.about-photo-card{border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 4px 24px rgba(0,0,0,.08);position:relative}
+body.dark .about-photo-card{border-color:rgba(255,255,255,.1)}
+.about-photo-bg{background:linear-gradient(170deg,#f0f4ff 0%,#dbeafe 30%,#bfdbfe 60%,#ddd6fe 100%);position:relative;min-height:320px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+body.dark .about-photo-bg{background:linear-gradient(170deg,#0f172a 0%,#1e293b 40%,#162032 70%,#0f172a 100%)}
+
+/* Animated rings inside about photo */
+.apb-ring{position:absolute;border-radius:50%;border:1px dashed rgba(99,102,241,.2);pointer-events:none;top:50%;left:50%}
+.apb-ring-1{width:300px;height:300px;transform:translate(-50%,-50%);animation:ring-spin-slow 18s linear infinite}
+.apb-ring-2{width:210px;height:210px;transform:translate(-50%,-50%);border-color:rgba(234,88,12,.18);animation:ring-spin-slow 12s linear infinite reverse}
+.apb-glow-1{position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(234,88,12,.12);top:0;right:0;filter:blur(40px);pointer-events:none}
+.apb-glow-2{position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(99,102,241,.12);bottom:20px;left:0;filter:blur(30px);pointer-events:none}
+@keyframes ring-spin-slow{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+.about-owner-photo{width:100%;max-width:340px;height:auto;display:block;object-fit:contain;object-position:bottom center;position:relative;z-index:2;filter:drop-shadow(0 -8px 24px rgba(99,102,241,.15));animation:owner-float 5s ease-in-out infinite}
+
+/* Name card below photo */
+.about-name-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+body.dark .about-name-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.anc-name{font-size:20px;font-weight:900;color:var(--ink);letter-spacing:-.02em;text-align:center;margin-bottom:4px}
+body.dark .anc-name{color:#fff}
+.anc-role{font-size:10.5px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;text-align:center;margin-bottom:14px}
+.anc-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.anc-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 6px;border-radius:10px;font-size:11px;font-weight:700;text-decoration:none;transition:all .22s;white-space:nowrap;border:1px solid transparent}
+.anc-wa{background:#e8fdf1;color:#15803d;border-color:rgba(21,128,61,.2)}
+.anc-wa:hover{background:#25d366;color:#fff;transform:translateY(-2px)}
+.anc-ph{background:var(--orange-light);color:var(--orange);border-color:rgba(234,88,12,.2)}
+.anc-ph:hover{background:var(--orange);color:#fff;transform:translateY(-2px)}
+.anc-loc{background:var(--blue-light);color:var(--blue2);border-color:rgba(37,99,235,.2)}
+.anc-loc:hover{background:var(--blue2);color:#fff;transform:translateY(-2px)}
+
+/* Why choose us */
+.about-why-section{margin-bottom:52px}
+.about-sec-hdr{text-align:center;margin-bottom:32px}
+.about-why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.awhy-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px 16px;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.04);transition:all .25s;position:relative;overflow:hidden}
+.awhy-card:hover{border-color:var(--orange);transform:translateY(-4px);box-shadow:0 8px 28px rgba(234,88,12,.12)}
+body.dark .awhy-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+.awhy-icon{font-size:32px;display:block;margin-bottom:10px;animation:icon-bob 3s ease-in-out infinite}
+.awhy-card:nth-child(2) .awhy-icon{animation-delay:.4s}
+.awhy-card:nth-child(3) .awhy-icon{animation-delay:.8s}
+.awhy-card:nth-child(4) .awhy-icon{animation-delay:1.2s}
+.awhy-card:nth-child(5) .awhy-icon{animation-delay:1.6s}
+.awhy-card:nth-child(6) .awhy-icon{animation-delay:2s}
+@keyframes icon-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.awhy-title{font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:5px}
+body.dark .awhy-title{color:#fff}
+.awhy-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* FAQ */
+.about-faq-section{margin-bottom:20px}
+.afaq-list{display:flex;flex-direction:column;gap:10px;max-width:820px;margin:0 auto}
+.afaq-item{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.04);transition:box-shadow .2s}
+body.dark .afaq-item{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+.afaq-item:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.afaq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:14px;user-select:none;transition:background .2s}
+.afaq-q:hover,.afaq-item.open .afaq-q{background:var(--orange-light)}
+body.dark .afaq-q:hover,body.dark .afaq-item.open .afaq-q{background:rgba(234,88,12,.1)}
+.afaq-qt{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4}
+body.dark .afaq-qt{color:#fff}
+.afaq-icon{width:26px;height:26px;border-radius:50%;background:var(--border2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--orange);flex-shrink:0;transition:all .3s;line-height:1}
+.afaq-item.open .afaq-icon{background:var(--orange);color:#fff;transform:rotate(45deg)}
+.afaq-a{display:none;padding:0 20px 16px;font-size:13.5px;color:var(--ink3);line-height:1.8;border-top:1px solid var(--border2)}
+body.dark .afaq-a{color:rgba(255,255,255,.65)}
+.afaq-item.open .afaq-a{display:block;animation:fadeUp .2s ease}
+
 @media(max-width:900px){
   .hero-inner{grid-template-columns:1fr}
-  .hero-card{display:none}
+  .hero-owner-panel{display:none}
+  .about-hero-inner{grid-template-columns:1fr}
+  .about-hero-right{display:none}
+  .about-story-section{grid-template-columns:1fr}
   .about-grid,.contact-grid{grid-template-columns:1fr}
   .hero-stats{grid-template-columns:repeat(3,1fr)}
 }
@@ -434,7 +775,44 @@ body.dark footer a{color:var(--orange2)}
 </head>
 <body>
 
-<!-- TOPBAR -->
+<!-- ══════════════════ LANDING PAGE ══════════════════ -->
+<div id="landing">
+  <div class="lp-bg">
+    <div class="lp-grad"></div>
+    <div class="lp-grid"></div>
+    <div class="lp-orb lp-orb-1"></div>
+    <div class="lp-orb lp-orb-2"></div>
+    <div class="lp-orb lp-orb-3"></div>
+    <div class="lp-particles" id="lpParticles"></div>
+  </div>
+  <div class="lp-content">
+    <div class="lp-logo-wrap">
+      <div class="lp-logo-ring"></div>
+      <div class="lp-logo-inner"><img src="logoo.png" alt="Pramod Online Multiservices"/></div>
+    </div>
+    <div class="lp-badge">🏛️ CSC · <span class="en">Aaple Sarkar Seva Kendra</span><span class="mr">आपले सरकार सेवा केंद्र</span></div>
+    <div class="lp-title en">Pramod Online<br><span>Multi-Services</span></div>
+    <div class="lp-title mr">प्रमोद ऑनलाईन<br><span>मल्टीसर्व्हिसेस</span></div>
+    <div class="lp-sub en">Ahmedpur's trusted government documentation hub —<br>fast, accurate &amp; affordable.</div>
+    <div class="lp-sub mr">अहमदपूरचे विश्वासार्ह सरकारी कागदपत्र केंद्र —<br>जलद, अचूक व परवडणारे.</div>
+    <div class="lp-stats">
+      <div class="lp-stat"><div class="n">20+</div><div class="l en">Services</div><div class="l mr">सेवा</div></div>
+      <div class="lp-stat"><div class="n">CSC</div><div class="l en">Authorised</div><div class="l mr">अधिकृत</div></div>
+      <div class="lp-stat"><div class="n">⚡</div><div class="l en">Fast Process</div><div class="l mr">जलद</div></div>
+    </div>
+    <div class="lp-btns">
+      <button class="lp-btn-main" onclick="enterSite()"><span>🚀 <span class="en">Enter Website</span><span class="mr">वेबसाईट उघडा</span></span></button>
+      <a href="https://wa.me/919552974911" target="_blank" class="lp-btn-wa">💬 WhatsApp</a>
+    </div>
+    <div class="lp-countdown">
+      <span class="lp-cd-num" id="lpNum">4</span>
+      <div class="lp-cd-track"><div class="lp-cd-bar" id="lpBar"></div></div>
+      <span class="lp-cd-text en">entering automatically…</span>
+      <span class="lp-cd-text mr">आपोआप उघडत आहे…</span>
+    </div>
+  </div>
+</div>
+
 <div class="topbar">
   <div class="tb-left">
     <a href="tel:9552974911" class="tb-link">
@@ -453,8 +831,8 @@ body.dark footer a{color:var(--orange2)}
   <div style="display:flex;align-items:center;gap:10px">
   <button id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid #cbd5e1;color:#64748b;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s" title="Toggle theme">🌙</button>
   <div class="lang-sw">
-    <button class="lang-btn active" id="btnEn" onclick="setLang('en')">English</button>
-    <button class="lang-btn" id="btnMr" onclick="setLang('mr')">मराठी</button>
+    <button class="lang-btn" id="btnEn" onclick="setLang('en')">English</button>
+    <button class="lang-btn active" id="btnMr" onclick="setLang('mr')">मराठी</button>
   </div>
   </div>
 </div>
@@ -517,49 +895,27 @@ body.dark footer a{color:var(--orange2)}
           <div class="hstat"><div class="num">⚡</div><div class="lbl en">Fast Process</div><div class="lbl mr">जलद प्रक्रिया</div></div>
         </div>
       </div>
-      <div class="hero-card">
-        <div class="hcard-title en">Quick Contact</div>
-        <div class="hcard-title mr">त्वरित संपर्क</div>
-        <div class="hcard-row">
-          <div class="hcard-icon hci-o">👤</div>
-          <div class="hcard-info">
-            <div class="hcard-label en">Owner</div><div class="hcard-label mr">मालक</div>
-            <div class="hcard-val">Pramod Gaikwad</div>
+      <div class="hero-owner-panel">
+        <div class="hero-owner-card">
+          <!-- Photo with gradient background -->
+          <div class="hero-photo-area">
+            <div class="hpa-ring hpa-ring-1"></div>
+            <div class="hpa-ring hpa-ring-2"></div>
+            <div class="hpa-dot hpa-dot-1"></div>
+            <div class="hpa-dot hpa-dot-2"></div>
+            <img src="owner.png" alt="Pramod Gaikwad" class="hero-owner-photo" onerror="this.src='1780559350958_owner.png'"/>
           </div>
-        </div>
-        <div class="hcard-row">
-          <div class="hcard-icon hci-o">📞</div>
-          <div class="hcard-info">
-            <div class="hcard-label en">Primary Phone</div><div class="hcard-label mr">फोन</div>
-            <div class="hcard-val"><a href="tel:9552974911">9552974911</a></div>
+          <!-- Info below photo -->
+          <div class="hero-owner-info">
+            <div class="hero-owner-name">Pramod Gaikwad</div>
+            <div class="hero-owner-role en">Proprietor — CSC Aaple Sarkar Seva Kendra</div>
+            <div class="hero-owner-role mr">मालक — CSC आपले सरकार सेवा केंद्र, अहमदपूर</div>
+            <div class="hero-owner-actions">
+              <a href="https://wa.me/919552974911" target="_blank" class="hoa-btn hoa-wa">💬 WhatsApp</a>
+              <a href="tel:9552974911" class="hoa-btn hoa-ph">📞 9552974911</a>
+              <a href="https://maps.google.com?q=18.705138,76.937182" target="_blank" class="hoa-btn hoa-loc">📍 <span class="en">Location</span><span class="mr">स्थान</span></a>
+            </div>
           </div>
-          <a href="tel:9552974911" class="hcard-btn">📞</a>
-        </div>
-        <div class="hcard-row">
-          <div class="hcard-icon hci-o">📞</div>
-          <div class="hcard-info">
-            <div class="hcard-label en">Alt. Phone</div><div class="hcard-label mr">पर्यायी फोन</div>
-            <div class="hcard-val"><a href="tel:8668383325">8668383325</a></div>
-          </div>
-          <a href="tel:8668383325" class="hcard-btn">📞</a>
-        </div>
-        <div class="hcard-row">
-          <div class="hcard-icon hci-g">💬</div>
-          <div class="hcard-info">
-            <div class="hcard-label">WhatsApp</div>
-            <div class="hcard-val"><a href="https://wa.me/919552974911" target="_blank">9552974911</a></div>
-          </div>
-          <a href="https://wa.me/919552974911" target="_blank" class="hcard-btn" style="background:#25d366">💬</a>
-        </div>
-        <div class="hcard-row">
-          <div class="hcard-icon hci-b">📍</div>
-          <div class="hcard-info">
-            <div class="hcard-label en">Address</div><div class="hcard-label mr">पत्ता</div>
-            <div class="hcard-val" style="font-size:12px;font-weight:500;line-height:1.5">Main Road, Dr. B.R. Ambedkar Chowk,<br>Kapad Line, Ahmedpur – 413515</div>
-          </div>
-        </div>
-        <div style="margin-top:14px">
-          <a href="https://maps.google.com?q=18.705138,76.937182" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);padding:11px;border-radius:8px;font-size:12.5px;font-weight:700;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:background .2s">🗺️ Open in Google Maps</a>
         </div>
       </div>
     </div>
@@ -1159,46 +1515,112 @@ body.dark footer a{color:var(--orange2)}
 <!-- ══════════════════ ABOUT ══════════════════ -->
 <div id="about" class="page">
   <div class="section alt">
-    <div class="sec-wrap">
-      <div class="sec-header">
+    <div class="about-page-wrap">
+
+      <!-- Page title -->
+      <div class="sec-header" data-aos style="margin-bottom:40px">
         <div class="sec-tag en">ABOUT US</div><div class="sec-tag mr">आमच्याबद्दल</div>
-        <h2 class="en">About Pramod Online Multi-Services</h2><h2 class="mr">प्रमोद ऑनलाईन मल्टीसर्व्हिसेस</h2>
+        <h2 class="en">About Pramod Online Multi-Services</h2>
+        <h2 class="mr">प्रमोद ऑनलाईन मल्टीसर्व्हिसेस बद्दल</h2>
       </div>
 
-      <div class="about-grid">
-        <div class="about-card dark">
-          <h3 class="en">🏆 Who We Are</h3><h3 class="mr">🏆 आम्ही कोण आहोत</h3>
-          <p class="en">Pramod Online Multi-Services is an authorised CSC (Common Services Centre) – Aaple Sarkar Seva Kendra in Ahmedpur, run by Pramod Gaikwad. We provide fast, accurate and affordable government certificate and documentation services to citizens of Ahmedpur and surrounding areas of Latur district.</p>
-          <p class="mr">प्रमोद ऑनलाईन मल्टीसर्व्हिसेस हे अहमदपूरमधील अधिकृत CSC – आपले सरकार सेवा केंद्र आहे. लातूर जिल्ह्यातील अहमदपूर व परिसरातील नागरिकांना जलद, अचूक व परवडणाऱ्या दरात सरकारी कागदपत्र सेवा प्रदान करतो.</p>
-        </div>
-        <div class="about-card">
-          <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:16px;border-bottom:2px solid var(--border2)">
-            <img src="owner.jpg" alt="Pramod Gaikwad" onerror="this.style.display='none'"
-                 style="width:72px;height:84px;object-fit:cover;object-position:top center;border-radius:10px;box-shadow:var(--shadow);flex-shrink:0;border:2px solid var(--border)"/>
-            <div>
-              <div style="font-size:17px;font-weight:800;color:var(--ink)">Pramod Gaikwad</div>
-              <div style="font-size:11.5px;font-weight:600;color:var(--orange);margin-top:3px" class="en">Proprietor · CSC Aaple Sarkar Seva Kendra</div>
-              <div style="font-size:11.5px;font-weight:600;color:var(--orange);margin-top:3px" class="mr">मालक · CSC आपले सरकार सेवा केंद्र</div>
+      <!-- TOP ROW: left text + contact, right photo + name card -->
+      <div class="about-top-row">
+
+        <!-- LEFT COLUMN -->
+        <div class="about-left-col">
+
+          <!-- Who We Are -->
+          <div class="about-story-card" data-aos="fade-right">
+            <div class="asc-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span class="en">WHO WE ARE</span><span class="mr">आम्ही कोण आहोत</span>
+            </div>
+            <div class="asc-text en">
+              Pramod Online Multi-Services is an authorised <strong>CSC (Common Services Centre) – Aaple Sarkar Seva Kendra</strong> located in Ahmedpur, Latur district. Run by <strong>Pramod Gaikwad</strong>, our centre provides fast, accurate and affordable government certificate and documentation services to citizens of Ahmedpur and the surrounding region.<br><br>
+              With years of hands-on experience in government procedures, we have helped <strong>thousands of families</strong> obtain their certificates, scholarships, PAN cards, and more — without the hassle of long queues or confusion. Our mission is simple: make government services accessible to every citizen with dignity and speed.
+            </div>
+            <div class="asc-text mr">
+              प्रमोद ऑनलाईन मल्टीसर्व्हिसेस हे अहमदपूर, लातूर जिल्ह्यातील अधिकृत <strong>CSC – आपले सरकार सेवा केंद्र</strong> आहे. <strong>प्रमोद गायकवाड</strong> यांच्याद्वारे चालवले जाणारे हे केंद्र जलद, अचूक व परवडणाऱ्या दरात सरकारी कागदपत्र सेवा प्रदान करते.<br><br>
+              अनेक वर्षांच्या अनुभवातून आम्ही <strong>हजारो कुटुंबांना</strong> जात प्रमाणपत्र, शिष्यवृत्ती, पॅन कार्ड व इतर सेवा सोप्या पद्धतीने मिळवून दिल्या आहेत. प्रत्येक नागरिकापर्यंत सरकारी सेवा पोहोचवणे हेच आमचे उद्दिष्ट आहे.
             </div>
           </div>
-          <h3 class="en">📍 Contact & Location</h3><h3 class="mr">📍 संपर्क व स्थान</h3>
-          <div class="ainfo"><div class="ainfo-icon">👤</div><div><div class="ainfo-lbl en">Owner / मालक</div><div class="ainfo-val">Pramod Gaikwad / प्रमोद गायकवाड</div></div></div>
-          <div class="ainfo"><div class="ainfo-icon">📞</div><div><div class="ainfo-lbl">Phone</div><div class="ainfo-val"><a href="tel:9552974911">9552974911</a> / <a href="tel:8668383325">8668383325</a></div></div></div>
-          <div class="ainfo"><div class="ainfo-icon">✉️</div><div><div class="ainfo-lbl">Email</div><div class="ainfo-val" style="font-size:13px"><a href="mailto:pramodonlinemultiservices@gmail.com">pramodonlinemultiservices@gmail.com</a></div></div></div>
-          <div class="ainfo"><div class="ainfo-icon">📍</div><div><div class="ainfo-lbl en">Address</div><div class="ainfo-lbl mr">पत्ता</div><div class="ainfo-val" style="font-size:13px;font-weight:500;line-height:1.6"><span class="en">Main Road, Dr. Babasaheb Ambedkar Chowk,<br>Kapad Line, Ahmedpur – 413515,<br>Latur District, Maharashtra</span><span class="mr">मेन रोड, डॉ. बाबासाहेब आंबेडकर चौक,<br>कापड लाईन, अहमदपूर – ४१३५१५,<br>लातूर जिल्हा, महाराष्ट्र</span></div></div></div>
+
+          <!-- Contact & Location -->
+          <div class="about-contact-card" data-aos>
+            <div class="acc2-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 19a19.5 19.5 0 01-9-9A19.79 19.79 0 012 3.18 2 2 0 014 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <span class="en">CONTACT &amp; LOCATION</span><span class="mr">संपर्क व स्थान</span>
+            </div>
+            <div class="cl-list">
+              <div class="cl-row"><div class="cl-ico cl-ico-o">📞</div><div class="cl-row-inner"><div class="cl-lbl en">PRIMARY PHONE</div><div class="cl-lbl mr">प्राथमिक फोन</div><div class="cl-v"><a href="tel:9552974911">9552974911</a></div></div><div class="cl-arr2">→</div></div>
+              <div class="cl-row"><div class="cl-ico cl-ico-o">📞</div><div class="cl-row-inner"><div class="cl-lbl en">ALTERNATE PHONE</div><div class="cl-lbl mr">पर्यायी फोन</div><div class="cl-v"><a href="tel:8668383325">8668383325</a></div></div><div class="cl-arr2">→</div></div>
+              <div class="cl-row"><div class="cl-ico cl-ico-g">💬</div><div class="cl-row-inner"><div class="cl-lbl">WHATSAPP</div><div class="cl-v"><a href="https://wa.me/919552974911" target="_blank">9552974911</a></div></div><div class="cl-arr2">→</div></div>
+              <div class="cl-row"><div class="cl-ico cl-ico-b">✉️</div><div class="cl-row-inner"><div class="cl-lbl">EMAIL</div><div class="cl-v"><a href="mailto:pramodonlinemultiservices@gmail.com" style="font-size:12px">pramodonlinemultiservices@gmail.com</a></div></div><div class="cl-arr2">→</div></div>
+              <div class="cl-row"><div class="cl-ico cl-ico-b">📍</div><div class="cl-row-inner"><div class="cl-lbl en">ADDRESS</div><div class="cl-lbl mr">पत्ता</div><div class="cl-v" style="font-size:12.5px;font-weight:500;line-height:1.55"><span class="en">Main Road, Dr. B.R. Ambedkar Chowk,<br>Kapad Line, Ahmedpur – 413515, Latur</span><span class="mr">मेन रोड, डॉ. बाबासाहेब आंबेडकर चौक,<br>कापड लाईन, अहमदपूर – ४१३५१५, लातूर</span></div></div><div class="cl-arr2">→</div></div>
+              <div class="cl-row"><div class="cl-ico cl-ico-o">🕘</div><div class="cl-row-inner"><div class="cl-lbl en">WORKING HOURS</div><div class="cl-lbl mr">वेळ</div><div class="cl-v en">Mon–Sat: 9 AM – 7 PM | Sun: Closed</div><div class="cl-v mr">सोम–शनि: ९ – ७ | रविवार: बंद</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="about-right-col">
+          <!-- Photo with gradient background -->
+          <div class="about-photo-card" data-aos="fade-left">
+            <div class="about-photo-bg">
+              <div class="apb-ring apb-ring-1"></div>
+              <div class="apb-ring apb-ring-2"></div>
+              <div class="apb-glow-1"></div>
+              <div class="apb-glow-2"></div>
+              <img src="owner.png" alt="Pramod Gaikwad" class="about-owner-photo" onerror="this.src='1780559350958_owner.png'"/>
+            </div>
+          </div>
+          <!-- Name + action card -->
+          <div class="about-name-card" data-aos>
+            <div class="anc-name">Pramod Gaikwad</div>
+            <div class="anc-role en">PROPRIETOR — CSC AAPLE SARKAR SEVA KENDRA</div>
+            <div class="anc-role mr">मालक — CSC आपले सरकार सेवा केंद्र</div>
+            <div class="anc-btns">
+              <a href="https://wa.me/919552974911" target="_blank" class="anc-btn anc-wa">💬 WhatsApp</a>
+              <a href="tel:9552974911" class="anc-btn anc-ph">📞 9552974911</a>
+              <a href="https://maps.google.com?q=18.705138,76.937182" target="_blank" class="anc-btn anc-loc">📍 <span class="en">Location</span><span class="mr">स्थान</span></a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="about-card" style="margin-bottom:0">
-        <h3 class="en">✨ Why Choose Us?</h3><h3 class="mr">✨ आम्हालाच का निवडा?</h3>
-        <div class="why-grid">
-          <div class="why-item"><div class="why-icon">⚡</div><div class="why-title en">Fast Processing</div><div class="why-title mr">जलद प्रक्रिया</div><div class="why-desc en">Quick turnaround on all applications</div><div class="why-desc mr">सर्व अर्जांवर जलद प्रक्रिया</div></div>
-          <div class="why-item"><div class="why-icon">🏛️</div><div class="why-title en">Govt. Authorised</div><div class="why-title mr">सरकार मान्यताप्राप्त</div><div class="why-desc en">Official CSC &amp; Aaple Sarkar centre</div><div class="why-desc mr">अधिकृत CSC व आपले सरकार केंद्र</div></div>
-          <div class="why-item"><div class="why-icon">💰</div><div class="why-title en">Affordable Fees</div><div class="why-title mr">परवडणारे शुल्क</div><div class="why-desc en">Reasonable service charges</div><div class="why-desc mr">वाजवी सेवा शुल्क</div></div>
-          <div class="why-item"><div class="why-icon">🤝</div><div class="why-title en">Full Assistance</div><div class="why-title mr">संपूर्ण मदत</div><div class="why-desc en">Document preparation guidance</div><div class="why-desc mr">कागदपत्र तयारीत मार्गदर्शन</div></div>
-          <div class="why-item"><div class="why-icon">📋</div><div class="why-title en">20+ Services</div><div class="why-title mr">२०+ सेवा</div><div class="why-desc en">All under one roof</div><div class="why-desc mr">एकाच ठिकाणी</div></div>
-          <div class="why-item"><div class="why-icon">😊</div><div class="why-title en">Friendly Staff</div><div class="why-title mr">मैत्रीपूर्ण सेवा</div><div class="why-desc en">Polite &amp; helpful service</div><div class="why-desc mr">विनम्र व मदतशीर सेवा</div></div>
+
+      <!-- WHY CHOOSE US -->
+      <div class="about-why-section">
+        <div class="about-sec-hdr sec-header" data-aos>
+          <div class="sec-tag en">WHY CHOOSE US</div><div class="sec-tag mr">आम्हालाच का निवडा</div>
+          <h2 class="en">What Makes Us Different</h2><h2 class="mr">आम्ही वेगळे का आहोत</h2>
+        </div>
+        <div class="about-why-grid">
+          <div class="awhy-card" data-aos="scale"><span class="awhy-icon">⚡</span><div class="awhy-title en">Fast Processing</div><div class="awhy-title mr">जलद प्रक्रिया</div><div class="awhy-desc en">Quick turnaround on all government applications, saving your time.</div><div class="awhy-desc mr">सर्व सरकारी अर्जांवर जलद कार्यवाही करतो.</div></div>
+          <div class="awhy-card" data-aos="scale"><span class="awhy-icon">🏛️</span><div class="awhy-title en">Govt. Authorised</div><div class="awhy-title mr">सरकार मान्यताप्राप्त</div><div class="awhy-desc en">Official CSC &amp; Aaple Sarkar Seva Kendra — fully authorised.</div><div class="awhy-desc mr">अधिकृत CSC व आपले सरकार केंद्र.</div></div>
+          <div class="awhy-card" data-aos="scale"><span class="awhy-icon">💰</span><div class="awhy-title en">Affordable Fees</div><div class="awhy-title mr">परवडणारे शुल्क</div><div class="awhy-desc en">Reasonable &amp; transparent service charges — no hidden costs.</div><div class="awhy-desc mr">पारदर्शक व वाजवी सेवा शुल्क.</div></div>
+          <div class="awhy-card" data-aos="scale"><span class="awhy-icon">🤝</span><div class="awhy-title en">Full Guidance</div><div class="awhy-title mr">संपूर्ण मार्गदर्शन</div><div class="awhy-desc en">We guide you through every step of document preparation.</div><div class="awhy-desc mr">कागदपत्र तयारीत प्रत्येक टप्प्यावर मार्गदर्शन.</div></div>
+          <div class="awhy-card" data-aos="scale"><span class="awhy-icon">📋</span><div class="awhy-title en">20+ Services</div><div class="awhy-title mr">२०+ सेवा</div><div class="awhy-desc en">All government services under one roof for your convenience.</div><div class="awhy-desc mr">एकाच ठिकाणी सर्व सरकारी सेवा.</div></div>
+          <div class="awhy-card" data-aos="scale"><span class="awhy-icon">😊</span><div class="awhy-title en">Friendly Service</div><div class="awhy-title mr">मैत्रीपूर्ण सेवा</div><div class="awhy-desc en">Polite, patient and helpful service — every single visit.</div><div class="awhy-desc mr">प्रत्येक भेटीत विनम्र व मदतशीर सेवा.</div></div>
         </div>
       </div>
+
+      <!-- FAQ -->
+      <div class="about-faq-section">
+        <div class="about-sec-hdr sec-header" data-aos>
+          <div class="sec-tag en">FAQ</div><div class="sec-tag mr">वारंवार विचारले जाणारे प्रश्न</div>
+          <h2 class="en">Frequently Asked Questions</h2><h2 class="mr">वारंवार विचारले जाणारे प्रश्न</h2>
+        </div>
+        <div class="afaq-list">
+          <div class="afaq-item" data-aos><div class="afaq-q" onclick="toggleFaq(this)"><div class="afaq-qt en">How long does it take to get a Caste Certificate?</div><div class="afaq-qt mr">जात प्रमाणपत्र मिळण्यास किती वेळ लागतो?</div><div class="afaq-icon">+</div></div><div class="afaq-a en">After submitting all required documents, the application is processed online. Typically, the certificate is issued within 7–15 working days depending on tehsil office workload. We track your application and inform you of updates.</div><div class="afaq-a mr">सर्व आवश्यक कागदपत्रे दिल्यानंतर अर्ज ऑनलाईन सादर केला जातो. तहसील कार्यालयाच्या कामकाजानुसार साधारणतः ७–१५ कामाच्या दिवसांत प्रमाणपत्र मिळते.</div></div>
+          <div class="afaq-item" data-aos><div class="afaq-q" onclick="toggleFaq(this)"><div class="afaq-qt en">Can I get my PAN Card corrected here?</div><div class="afaq-qt mr">येथे पॅन कार्ड दुरुस्ती होते का?</div><div class="afaq-icon">+</div></div><div class="afaq-a en">Yes! We handle both new PAN Card applications and corrections (name, date of birth, address changes etc.). Bring your Aadhar card, photo and any supporting proof for the correction.</div><div class="afaq-a mr">होय! आम्ही नवीन पॅन कार्ड अर्ज आणि दुरुस्ती (नाव, जन्मतारीख, पत्ता बदल इ.) दोन्ही करतो. आधार कार्ड, फोटो व दुरुस्तीचे पुरावे सोबत आणा.</div></div>
+          <div class="afaq-item" data-aos><div class="afaq-q" onclick="toggleFaq(this)"><div class="afaq-qt en">Do you help with Scholarship applications (Maha DBT)?</div><div class="afaq-qt mr">शिष्यवृत्ती (Maha DBT) अर्जासाठी मदत होते का?</div><div class="afaq-icon">+</div></div><div class="afaq-a en">Absolutely. We assist with all Maha DBT scholarship applications including SC, ST, OBC, EBC categories. We help you fill the form, upload documents and track the status.</div><div class="afaq-a mr">हो, नक्कीच. SC, ST, OBC, EBC सर्व प्रकारच्या Maha DBT शिष्यवृत्ती अर्जांसाठी आम्ही मदत करतो — फॉर्म भरणे, कागदपत्रे अपलोड करणे आणि स्थिती तपासणे.</div></div>
+          <div class="afaq-item" data-aos><div class="afaq-q" onclick="toggleFaq(this)"><div class="afaq-qt en">What are your working hours?</div><div class="afaq-qt mr">तुमचे काम करण्याचे वेळ काय आहे?</div><div class="afaq-icon">+</div></div><div class="afaq-a en">We are open Monday to Saturday, 9:00 AM to 7:00 PM. Closed on Sundays. You can also WhatsApp us anytime for queries.</div><div class="afaq-a mr">आम्ही सोमवार ते शनिवार, सकाळी ९ ते सायंकाळी ७ वाजेपर्यंत उघडे असतो. रविवारी बंद. प्रश्नांसाठी कधीही WhatsApp करा.</div></div>
+          <div class="afaq-item" data-aos><div class="afaq-q" onclick="toggleFaq(this)"><div class="afaq-qt en">Can I call to check what documents I need before visiting?</div><div class="afaq-qt mr">भेट देण्यापूर्वी फोन करून कागदपत्रांची माहिती मिळेल का?</div><div class="afaq-icon">+</div></div><div class="afaq-a en">Yes, absolutely! Call us on 9552974911 or WhatsApp us and we'll tell you exactly what documents you need to bring. We can also share the checklist on WhatsApp.</div><div class="afaq-a mr">हो! 9552974911 वर फोन करा किंवा WhatsApp करा — आम्ही तुम्हाला नेमकी कागदपत्रांची यादी सांगू.</div></div>
+          <div class="afaq-item" data-aos><div class="afaq-q" onclick="toggleFaq(this)"><div class="afaq-qt en">Do you offer Udyog Aadhar / MSME registration?</div><div class="afaq-qt mr">उद्योग आधार / MSME नोंदणी होते का?</div><div class="afaq-icon">+</div></div><div class="afaq-a en">Yes. We assist with Udyog Aadhar (MSME) registration, Food Licence (FSSAI), Shop Act registration and more business-related services.</div><div class="afaq-a mr">हो. उद्योग आधार (MSME) नोंदणी, अन्न परवाना (FSSAI), शॉप ऍक्ट नोंदणी इत्यादी व्यावसायिक सेवा आम्ही देतो.</div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1250,10 +1672,18 @@ body.dark footer a{color:var(--orange2)}
 
 <!-- FOOTER -->
 <footer>
-  <div style="margin-bottom:4px"><strong class="en">Pramod Online Multi-Services – CSC Aaple Sarkar Seva Kendra, Ahmedpur</strong><strong class="mr">प्रमोद ऑनलाईन मल्टीसर्व्हिसेस – आपले सरकार सेवा केंद्र, अहमदपूर</strong></div>
-  <div class="en">Pramod Gaikwad · <a href="tel:9552974911">9552974911</a> / <a href="tel:8668383325">8668383325</a></div>
-  <div class="mr">प्रमोद गायकवाड · <a href="tel:9552974911">9552974911</a> / <a href="tel:8668383325">8668383325</a></div>
-  <div style="margin-top:8px;font-size:11.5px;opacity:.35">© 2026 Pramod Online Multi-Services. All rights reserved.</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <strong class="en">Pramod Online Multi-Services – CSC Aaple Sarkar Seva Kendra, Ahmedpur</strong>
+      <strong class="mr">प्रमोद ऑनलाईन मल्टीसर्व्हिसेस – आपले सरकार सेवा केंद्र, अहमदपूर</strong>
+      <div style="margin-top:6px">
+        <span class="en">Pramod Gaikwad (Proprietor) · <a href="tel:9552974911">9552974911</a> / <a href="tel:8668383325">8668383325</a></span>
+        <span class="mr">प्रमोद गायकवाड (मालक) · <a href="tel:9552974911">9552974911</a> / <a href="tel:8668383325">8668383325</a></span>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Pramod Online Multi-Services. All rights reserved.</div>
+    <div class="footer-sig">crafted by <a href="https://yogeshgk9765.github.io/My-Portfolio/" target="_blank">Yogesh Kalyankar</a> &nbsp;·&nbsp; <a href="https://github.com/YogeshGK9765" target="_blank">GitHub</a></div>
+  </div>
 </footer>
 
 <!-- FLOATING BUTTONS -->
@@ -1271,6 +1701,64 @@ body.dark footer a{color:var(--orange2)}
 </div>
 
 <script>
+// ── LANDING PAGE ──────────────────────────────────
+(function(){
+  // Generate floating particles
+  const container = document.getElementById('lpParticles');
+  if(container){
+    for(let i=0;i<18;i++){
+      const d = document.createElement('div');
+      d.className='lp-dot';
+      d.style.cssText=`left:${Math.random()*100}%;animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*6}s;width:${2+Math.random()*3}px;height:${2+Math.random()*3}px;opacity:${.3+Math.random()*.5}`;
+      container.appendChild(d);
+    }
+  }
+  // Countdown auto-redirect
+  let t = 4;
+  const numEl = document.getElementById('lpNum');
+  const interval = setInterval(()=>{
+    t--;
+    if(numEl) numEl.textContent = t;
+    if(t<=0){ clearInterval(interval); enterSite(); }
+  },1000);
+  window._lpInterval = interval;
+})();
+
+function enterSite(){
+  clearInterval(window._lpInterval);
+  const lp = document.getElementById('landing');
+  lp.classList.add('exit');
+  setTimeout(()=>lp.classList.add('hidden'), 850);
+}
+
+
+// ── AOS OBSERVER ──────────────────────────────────
+(function initAOS(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add('aos-visible');
+    });
+  },{threshold:.1});
+  function observe(){
+    document.querySelectorAll('[data-aos]').forEach(el=>obs.observe(el));
+  }
+  observe();
+  // Re-observe when page changes
+  const origShowPage = window.showPage;
+  window.showPage = function(id){
+    origShowPage(id);
+    setTimeout(observe,50);
+  };
+})();
+
+// ── FAQ ───────────────────────────────────────────
+function toggleFaq(el){
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
 // ── PAGE NAV ──────────────────────────────────────
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1331,17 +1819,25 @@ function filterDocs(q){
 // ── LANGUAGE ──────────────────────────────────────
 function setLang(lang){
   if(lang==='mr'){
-    document.body.classList.add('lang-mr');
+    document.body.classList.remove('lang-en');
     document.getElementById('btnMr').classList.add('active');
     document.getElementById('btnEn').classList.remove('active');
     document.documentElement.lang='mr';
+    localStorage.setItem('lang','mr');
   } else {
-    document.body.classList.remove('lang-mr');
+    document.body.classList.add('lang-en');
     document.getElementById('btnEn').classList.add('active');
     document.getElementById('btnMr').classList.remove('active');
     document.documentElement.lang='en';
+    localStorage.setItem('lang','en');
   }
 }
+// Init language (default Marathi)
+(function(){
+  const saved = localStorage.getItem('lang');
+  if(saved==='en') setLang('en');
+  else setLang('mr');
+})();
 
 // ── THEME ─────────────────────────────────────────
 function applyTheme(dark){
